@@ -1,0 +1,357 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+FILE *entrada;
+FILE *saida;
+
+int a = 1;
+int b = 1;
+int c = 1;
+int d = 1;
+int e = 1;
+int f = 1;
+
+typedef struct vetores{
+	unsigned int qtdNum;
+	int *numeros;
+}vetores;
+
+typedef struct tipo_ordenacao{
+	unsigned int contador;
+	char nome[10];
+	vetores *ordenar;
+}tipo_ordenacao;
+
+typedef struct Kappasort{
+	char nome[10];
+	unsigned int contador;
+}Kappasort;
+
+void trocar(int *V1, int *V2, int indice){
+	int *aux = (int *)malloc(sizeof(int));
+	aux[0] = V1[0];
+	V1[0] = V2[0];
+	V2[0] = aux[0];
+	switch(indice){
+		case 0:
+			a++;
+			break;
+		case 1:
+			b++;
+			break;
+		case 2:
+			c++;
+			break;
+		case 3:
+			d++;
+			break;
+		case 4:
+			e++;
+			break;
+		case 5:
+			f++;
+			break;
+		default:
+			printf("OPCAO INEXISTENTE\n");
+			exit(7);
+		}
+}
+
+int particionar(int V[], int inicio, int fim, int indice) {
+	switch(indice){
+		case 0:
+			a++;
+			break;
+		case 1:
+			b++;
+			break;
+		case 2:
+			c++;
+			break;
+		case 3:
+			d++;
+			break;
+		case 4:
+			e++;
+			break;
+		case 5:
+			f++;
+			break;
+		default:
+			printf("OPCAO INEXISTENTE\n");
+			exit(7);
+		}
+	int pivo = V[fim];
+	int i = inicio - 1;
+	int j;
+	for(j = inicio; j < fim; j++) {
+		if(V[j] <= pivo) {
+			i = i + 1;
+			trocar(&V[i], &V[j], indice);
+		}
+	}
+	trocar(&V[i + 1], &V[fim], indice);
+	return i + 1;
+}
+
+int hoare(int V[], int inicio, int fim, int indice) {
+	switch(indice){
+		case 0:
+			a++;
+			break;
+		case 1:
+			b++;
+			break;
+		case 2:
+			c++;
+			break;
+		case 3:
+			d++;
+			break;
+		case 4:
+			e++;
+			break;
+		case 5:
+			f++;
+			break;
+		default:
+			printf("OPCAO INEXISTENTE\n");
+			exit(7);
+		}
+	int pivo = V[inicio];
+	int i = inicio;
+	int j = fim;
+	while(i < j) {
+		while(j > i && V[j] >= pivo) j--;
+		while(i < j && V[i] < pivo) i++;
+		if(i < j) trocar(&V[i], &V[j], indice);
+	}
+	return j;
+}
+
+int valor_absolutor(int x){
+	if(x < 0){
+		return x*(-1);
+	}
+	return x;
+}
+
+int randomico(int V[], int inicio, int fim, int indice){
+	int k = valor_absolutor(V[inicio]);
+	int i = inicio + k%(fim - inicio + 1);
+	trocar(&V[fim], &V[i], indice);
+	return particionar(V, inicio, fim, indice);
+}
+
+int randomico2(int V[], int inicio, int fim, int indice){
+	int k = valor_absolutor(V[inicio]);
+	int i = inicio + k%(fim - inicio + 1);
+	trocar(&V[inicio], &V[i], indice);
+	return hoare(V, inicio, fim, indice);
+}
+
+int funcao_mediana(int *V, int inicio, int fim, int indice){
+	int n = fim - inicio + 1;
+	int V1 = V[n/4];
+	int V2 = V[n/2];
+	int V3 = V[(3*n)/4];
+	if((V1 >= V2 && V1 <= V3)||(V1 >= V3 && V1 <= V2)){
+		trocar(&V[fim], &V[n/4], indice);
+		
+	}else if((V2 >= V1 && V2 <= V3) || (V2 >= V3 && V2 <= V1)){
+		trocar(&V[fim], &V[n/2], indice);
+	}else if((V3 >= V1 && V3 <= V2) || (V3 >= V2 && V3 <= V1)){
+		trocar(&V[fim], &V[(3*n)/4], indice);
+	}
+	return particionar(V, inicio, fim, indice);
+}
+
+int funcao_mediana2(int *V, int inicio, int fim, int indice){
+	int n = fim - inicio + 1;
+	int V1 = V[n/4];
+	int V2 = V[n/2];
+	int V3 = V[(3*n)/4];
+	if((V1 > V2 && V1 < V3)||(V1 > V3 && V1 < V2)){
+		trocar(&V[n/4], &V[inicio], indice);
+	}else if((V2 > V1 && V2 < V3) || (V2 > V3 && V2 < V1)){
+		trocar(&V[n/2], &V[inicio], indice);
+	}else if((V3 > V1 && V3 < V2) || (V3 > V2 && V3 < V1)){
+		trocar(&V[(3*n)/4], &V[inicio], indice);
+	}else if(V1 == V2 && V2 == V3){
+		trocar(&V[n/4], &V[inicio], indice);
+	}
+	return hoare(V, inicio, fim, indice);
+}
+
+void quicksort_particionar(int V[], int inicio, int fim, int indice) {
+	if(inicio < fim) {
+		int pivo = 0;
+		switch(indice){
+			case 0:
+				a++;
+				pivo = particionar(V, inicio, fim, indice);
+				break;
+			case 1:
+				b++;
+				pivo = funcao_mediana(V, inicio, fim, indice);
+				break;
+			case 2:
+				c++;
+				pivo = randomico(V, inicio, fim, indice);
+				break;
+			default:
+				printf("OPCAO INEXISTENTE\n");
+				exit(7);
+			}
+		quicksort_particionar(V, inicio, pivo - 1, indice);
+		quicksort_particionar(V, pivo + 1, fim, indice);
+	}
+}
+
+void quicksort_hoare(int V[], int inicio, int fim, int indice) {
+	if(inicio < fim) {
+		int pivo = 0;
+		switch(indice){
+			case 3:
+				d++;
+				pivo = hoare(V, inicio, fim, indice);
+				break;
+			case 4:
+				e++;
+				pivo = funcao_mediana2(V, inicio, fim, indice);
+				break;
+			case 5:
+				f++;
+				pivo = randomico2(V, inicio, fim, indice);
+				break;
+			default:
+				printf("OPCAO INEXISTENTE\n");
+				exit(7);
+		}
+		quicksort_hoare(V, inicio, pivo, indice);
+		quicksort_hoare(V, pivo + 1, fim, indice);
+	}
+}
+
+void funcao_imprimir(Kappasort *O, int tamanho, unsigned int indice){
+	printf("[%d] N(%d)",indice, tamanho); 
+	for(int i=0; i<6; i++){
+		printf(" %s(%d)", O[i].nome, O[i].contador);
+	}printf("\n");
+}
+
+void kappasort_trocar(Kappasort *X, Kappasort *Y){
+	Kappasort *aux = (Kappasort *)malloc(sizeof(Kappasort));
+	aux[0] = X[0];
+	X[0] = Y[0];
+	Y[0] = aux[0];
+}
+
+void kappasort(tipo_ordenacao *O, unsigned int indice){
+	Kappasort *V = (Kappasort *)malloc(6*sizeof(Kappasort));
+	int tamanho = O[0].ordenar->qtdNum;
+	for(int i = 0; i < 6; i++){
+		strcpy(V[i].nome, O[i].nome);
+		V[i].contador = O[i].contador;
+	}
+	int i, j;
+	for(i = 1; i < 6; i = i + 1)
+		for(j = i; j > 0 && V[j - 1].contador > V[j].contador; j--)
+	kappasort_trocar(&V[j], &V[j - 1]);
+	
+	funcao_imprimir(V, tamanho, indice);
+}
+
+void funcao_copiar(int *x, int *y, int tam){
+	for(int i=0; i<tam; i++){
+		x[i] = y[i];
+	}
+}
+
+void funcao_ordenar(vetores *V, int qtdV){
+	tipo_ordenacao *ordem;
+	ordem = (tipo_ordenacao *)malloc(6*sizeof(tipo_ordenacao));
+	strcpy(ordem[0].nome, "PP");
+	strcpy(ordem[1].nome, "PM");
+	strcpy(ordem[2].nome, "PA");
+	strcpy(ordem[3].nome, "HP");
+	strcpy(ordem[4].nome, "HM");
+	strcpy(ordem[5].nome, "HA");
+	for(int i=0; i<6; i++){
+		ordem[i].ordenar = (vetores *)malloc(sizeof(vetores));
+	}
+	for(int i=0; i<qtdV; i++){
+		for(int j=0; j<3; j++){
+			int aux = V[i].qtdNum;
+			ordem[j].ordenar[i].numeros = (int *)malloc(aux*sizeof(int));
+			funcao_copiar(ordem[j].ordenar->numeros, V[i].numeros, aux);
+			ordem[j].ordenar->qtdNum = V[i].qtdNum;
+			quicksort_particionar(ordem[j].ordenar->numeros, 0, (aux-1), j);
+			switch(j){
+			case 0:
+				ordem[j].contador = a;
+				break;
+			case 1:
+				ordem[j].contador = b;
+				break;
+			case 2:
+				ordem[j].contador = c;
+				break;
+			default:
+				printf("OPCAO INEXISTENTE\n");
+				exit(7);
+			}
+		}
+		for(int j=3; j<6; j++){
+			int aux = V[i].qtdNum;
+			ordem[j].ordenar->numeros = (int *)malloc(aux*sizeof(int));
+			funcao_copiar(ordem[j].ordenar->numeros, V[i].numeros, aux);
+			ordem[j].ordenar->qtdNum = V[i].qtdNum;
+			quicksort_hoare(ordem[j].ordenar->numeros, 0, (aux-1), j);
+			switch(j){
+			case 3:
+				ordem[j].contador = d;
+				break;
+			case 4:
+				ordem[j].contador = e;
+				break;
+			case 5:
+				ordem[j].contador = f;
+				break;
+			default:
+				printf("OPCAO INEXISTENTE\n");
+				exit(7);
+			}
+		}
+		kappasort(ordem, i);
+		a = b = c = d = e = f = 1;
+	}
+}
+
+int main(int argc, char* argv[]){
+	entrada = fopen(argv[1], "r");
+	saida = fopen(argv[2], "w");
+    if(entrada == NULL){
+        printf("ENTRADA INVALIDA\n");
+        exit(1);
+	}else{
+		int num_total;
+		int qtd;
+		vetores *vetor;
+		fscanf(entrada, "%d", &num_total);
+		vetor = (vetores *)malloc(num_total*sizeof(vetores));
+		for(int i=0; i<num_total; i++){
+			fscanf(entrada, "%d", &qtd);
+			vetor[i].qtdNum = qtd;
+			vetor[i].numeros = (int *)malloc(qtd*sizeof(int));
+			for(int j=0; j<qtd; j++){
+				fscanf(entrada, "%d", &vetor[i].numeros[j]);
+			}
+		}
+		funcao_ordenar(vetor, num_total);
+	}
+    fclose(entrada);
+	fclose(saida);
+	return 0;
+}

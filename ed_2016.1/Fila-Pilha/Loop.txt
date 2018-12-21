@@ -1,0 +1,19 @@
+if((aux[0].status && aux[1].status)!=0){
+						if((aux[0].P[aux[0].indice].paginas) < (aux[1].P[aux[1].indice].paginas)){
+							aux[1].P[aux[1].indice].paginas -= aux[0].P[aux[0].indice].paginas;
+							aux[0].P[aux[0].indice].paginas -= aux[0].P[aux[0].indice].paginas;
+							aux[0].status = 0;
+						}
+						if((aux[0].P[aux[0].indice].paginas) > (aux[1].P[aux[1].indice].paginas)){
+							aux[0].P[aux[0].indice].paginas -= aux[1].P[aux[1].indice].paginas;
+							aux[1].P[aux[1].indice].paginas -= aux[1].P[aux[1].indice].paginas;
+							aux[1].status = 0;
+						}
+						if((aux[0].P[aux[0].indice].paginas) == (aux[1].P[aux[1].indice].paginas)){
+							aux[0].P[aux[0].indice].paginas -= aux[0].P[aux[0].indice].paginas;
+							aux[1].P[aux[1].indice].paginas -= aux[1].P[aux[1].indice].paginas;
+							
+							aux[0].status = 0;
+							aux[1].status = 0;
+						}
+					}

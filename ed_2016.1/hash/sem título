@@ -1,0 +1,18 @@
+int main(){
+	int indice = 0;
+	char string[100] = {"cd ef"};
+	int i;
+	for(i=0; i<100; i++){
+		if(string[i] == '\0'){
+			break;
+		}else{
+				printf("%d ", string[i]);
+				indice = indice ^ string[i];
+			}
+		}
+	printf("\n");
+	int h;
+	h = (indice)*7%10;
+	printf("%d\n", h);
+	return 0;
+}

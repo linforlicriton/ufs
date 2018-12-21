@@ -1,0 +1,17 @@
+int funcao_mediana(int *V, int inicio, int fim, int indice){
+	int n = fim - inicio + 1;
+	int x = n/4 + inicio;
+	int y = n/2 + inicio;
+	int z = 3*n/4 + inicio;
+	int V1 = V[x];
+	int V2 = V[y];
+	int V3 = V[z];
+	if((V1 >= V2 && V1 <= V3)||(V1 >= V3 && V1 <= V2)){
+		trocar(&V[fim], &V[x], indice);
+	}else if((V2 >= V1 && V2 <= V3) || (V2 >= V3 && V2 <= V1)){
+		trocar(&V[fim], &V[y], indice);
+	}else if((V3 >= V1 && V3 <= V2) || (V3 >= V2 && V3 <= V1)){
+		trocar(&V[fim], &V[z], indice);
+	}
+	return particionar(V, inicio, fim, indice);
+}

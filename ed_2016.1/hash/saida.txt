@@ -1,0 +1,6 @@
+[S0] ufs
+[S0] ufs, a b c
+[S2] cd ef
+[S2] cd ef, e d
+S0->S1
+[S1] hash

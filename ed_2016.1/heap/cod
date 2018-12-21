@@ -1,0 +1,8 @@
+for(int i=0; i<5; i++){
+			fscanf(entrada, "%llx %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", &data[i].codigo, &data[i].numEscolhidos[0], &data[i].numEscolhidos[1],
+			&data[i].numEscolhidos[2], &data[i].numEscolhidos[3], &data[i].numEscolhidos[4], &data[i].numEscolhidos[5], &data[i].numEscolhidos[6],
+			&data[i].numEscolhidos[7], &data[i].numEscolhidos[8], &data[i].numEscolhidos[9], &data[i].numEscolhidos[10], &data[i].numEscolhidos[11],
+			&data[i].numEscolhidos[12], &data[i].numEscolhidos[13], &data[i].numEscolhidos[14]);
+			
+			data[i].indice = 0;
+		}
